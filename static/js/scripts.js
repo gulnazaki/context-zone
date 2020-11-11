@@ -14,9 +14,10 @@
             postPlaylists(field);
         }
         else {
+            var p_l = playlists.length;
             var [id, name, emb, url] = playlists.pop();
             var div = '<div class="text-center">' + 
-                '<h2 class="text-white-50 mx-auto mt-2 mb-5">Select up to ' + parseInt(10 - selected_playlist_ids.length) + ' more</h2>' +
+                '<h2 class="text-white-50 mx-auto mt-2 mb-5">Select up to ' + parseInt(Math.min(p_l, 10 - selected_playlist_ids.length)) + ' out of ' + parseInt(p_l) + ' playlists left</h2>' +
                 '<iframe src="' + emb + '" width="400" height="180" style="max-width: 100%;"' +
                                 'frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>' +
                 '<h2 class="text-white-50 mx-auto mt-2 mb-2">Do you want to include ' + '<a target="_blank" href="' + url + '">' + name + '</a>?</h2>' +
