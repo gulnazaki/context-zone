@@ -37,14 +37,15 @@ def get_stats_for_playlists(sp, playlists):
         stats[feat] = (mean, std)
     return stats
 
-def get_possible_tracks(sp, stats, shallow=False):
+def get_user_profiling(sp, stats, shallow=False):
     relevant_artists = set()
-    possible_tracks = []
+    possible_tracks = set()
 
     for idx, artist in enumerate(sp.current_user_top_artists(limit=50)['items']):
-        relevant_artists.add(artist['id'])
-        if not shallow:
-            max_related = 13 - idx//5
+        if shallow:
+            relevant_artists.add(artist['id'])
+        else:
+            max_related = 10 - idx//5
             for r_artist in sp.artist_related_artists(artist_id=artist['id'])['artists'][:max_related]:
                 relevant_artists.add(r_artist['id'])
             
@@ -58,22 +59,24 @@ def get_possible_tracks(sp, stats, shallow=False):
     limit = 100 if shallow else 20
     target_stats = {'target_' + k: v[0] for k,v in stats.items()}
     for artist_seed in relevant_artists:
-        possible_tracks += [t['id'] for t in sp.recommendations(seed_artists=artist_seed, limit=limit, **target_stats)['tracks']]
+        possible_tracks.update([t['id'] for t in sp.recommendations(seed_artists=artist_seed, limit=limit, **target_stats)['tracks']])
     
-    return list(set(possible_tracks))
+    possible_tracks = list(possible_tracks)
+    target_id_chunks = [possible_tracks[x:x+100] for x in range(0, len(possible_tracks), 100)]
 
-def score_user_profiling(sp, stats, possible_tracks):
+    targets = []
+    for ids in target_id_chunks:
+        targets += zip(ids, sp.audio_features(ids))
+
+    return targets
+
+def score_user_profiling(sp, stats, tracks):
     def score(stats, target):
         s = 0
         for feat in relevant_feats:
             mean, std = stats[feat]
             s += abs(target[feat] - mean)/std
         return s
-
-    tracks_chunks = [possible_tracks[x:x+100] for x in range(0, len(possible_tracks), 100)]
-    tracks = []
-    for ids in tracks_chunks:
-        tracks += zip(ids, sp.audio_features(ids))
 
     sorted_tracks = [t[0] for t in sorted(tracks, key=lambda x: score(stats, x[1]))]
     return sorted_tracks
