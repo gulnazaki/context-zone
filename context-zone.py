@@ -51,15 +51,24 @@ def statistics():
 def profile_user():
 	sp = get_sp(session)
 	shallow = request.get_json(force=True)['choice']
-	if not (session.get('stats', False)) or not (session.get('context', False)):
-		return "no stats or context"
 
 	stats = session.get('stats')
 	context = session.get('context')
 
-	user_profiling = get_user_profiling(sp, stats, shallow)
+	possible_tracks = get_possible_tracks(sp, stats, shallow)
 
-	sorted_tracks = score_user_profiling(sp, stats, user_profiling)
+    session["possible_tracks"] = possible_tracks
+
+    return str(len(possible_tracks))
+
+@app.route('/personalized-playlist')
+def personalized_playlist():
+    sp = get_sp(session)
+    stats = session.get('stats')
+    context = session.get('context')
+    possible_tracks = session.get('possible_tracks')
+
+	sorted_tracks = score_user_profiling(sp, stats, possible_tracks)
 	playlist_urls = save_playlist(sp, context, sorted_tracks)
 
 	return json.dumps(playlist_urls)

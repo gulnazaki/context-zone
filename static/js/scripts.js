@@ -71,19 +71,24 @@
             data: JSON.stringify({choice : shallow}),
             success: function(response)
             {
-                if (response == "no stats or context"){
-                    field.replaceWith("<h2 class=text-white-50 mx-auto mt-2 mb-5>No stats available for your session...</h2>");
-                    setTimeout(() => {window.location.reload();}, 2000);
-                }
-                else {
-                    var [url, emb] = JSON.parse(response);
-                    var embed = '<div class="text-center">' +
-                                '<h2 class="text-white-50 mx-auto mt-2 mb-5">Your <a target="_blank" href="' + url + '">playlist</a> is ready</h2>' +
-                                '<iframe src="' + emb + '" width="400" height="500" style="max-width: 100%;" ' +
-                                'frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>' +
-                                '</div>';
-                    field.replaceWith(embed);
-                }
+                field = field.replaceWithPush("<h2 class=text-white mx-auto mt-2 mb-5 text-center>Sorting " + parseInt(response) + " suitable tracks, based on their audio features...</h2>");
+                $.ajax({
+                    type: "GET",
+                    url: "/personalized-playlist",
+                    success: function(response)
+                    {
+                        var [url, emb] = JSON.parse(response);
+                        var embed = '<div class="text-center">' +
+                                    '<h2 class="text-white-50 mx-auto mt-2 mb-5">Your <a target="_blank" href="' + url + '">playlist</a> is ready</h2>' +
+                                    '<iframe src="' + emb + '" width="400" height="500" style="max-width: 100%;" ' +
+                                    'frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>' +
+                                    '</div>';
+                        field.replaceWith(embed);
+                    },
+                        error: function(response) {
+                        errorHandling(field);
+                    }
+                });
             },
             error: function(response) {
                 errorHandling(field);
