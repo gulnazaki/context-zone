@@ -1,0 +1,1 @@
+web: gunicorn context-zone:app --log-file -
