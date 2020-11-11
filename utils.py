@@ -41,10 +41,11 @@ def get_user_profiling(sp, stats, shallow=False):
     relevant_artists = set()
     possible_tracks = []
 
-    for artist in sp.current_user_top_artists(limit=50)['items']:
+    for idx, artist in enumerate(sp.current_user_top_artists(limit=50)['items']):
         relevant_artists.add(artist['id'])
         if not shallow:
-            for r_artist in sp.artist_related_artists(artist_id=artist['id'])['artists']:
+            max_related = 15 - idx//5
+            for r_artist in sp.artist_related_artists(artist_id=artist['id'])['artists'][:max_related]:
                 relevant_artists.add(r_artist['id'])
             
     relevant_artists = list(relevant_artists)        

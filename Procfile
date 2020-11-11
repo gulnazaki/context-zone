@@ -1,1 +1,1 @@
-web: gunicorn context-zone:app --log-file -
+web: gunicorn context-zone:app --timeout 25 --log-file -
