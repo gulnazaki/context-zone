@@ -45,7 +45,7 @@ def get_user_profiling(sp, stats, shallow=False):
         if shallow:
             relevant_artists.add(artist['id'])
         else:
-            max_related = 10 - idx//5
+            max_related = 8 - idx//7
             for r_artist in sp.artist_related_artists(artist_id=artist['id'])['artists'][:max_related]:
                 relevant_artists.add(r_artist['id'])
             
@@ -54,9 +54,9 @@ def get_user_profiling(sp, stats, shallow=False):
     if shallow:
         relevant_artists = [[r] for r in relevant_artists]
     else:
-        relevant_artists = [relevant_artists[x:x+5] for x in range(0, len(relevant_artists), 5)]
+        relevant_artists = [relevant_artists[x:x+5] for x in range(0, len(relevant_artists), 5)][:30]
 
-    limit = 100 if shallow else 20
+    limit = 100
     target_stats = {'target_' + k: v[0] for k,v in stats.items()}
     for artist_seed in relevant_artists:
         possible_tracks.update([t['id'] for t in sp.recommendations(seed_artists=artist_seed, limit=limit, **target_stats)['tracks']])
