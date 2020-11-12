@@ -7,7 +7,7 @@
         <meta name="author" content="" />
         <title>Context Zone</title>
         <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename = 'images/icon.png') }}" />
-        <link rel="img_src" href="{{ url_for('static', filename = 'images/bg-masthead.jpg') }}" /> 
+        <link rel="image_src" href="{{ url_for('static', filename = 'images/bg-masthead.jpg') }}" /> 
         <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
         <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
@@ -19,25 +19,17 @@
         <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
             <div class="container">
                 <a class="navbar-brand js-scroll-trigger" href=".">Context Zone</a>
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
-                    </ul>
-                </div>
+                <div class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></div>
             </div>
         </nav>
         <!-- Masthead-->
-        <header class="masthead">
-            <div class="container d-flex h-100 align-items-center">
+        <header class="masthead d-flex">
+            <div class="container d-flex align-items-center">
                 <div class="mx-auto text-center">
-                    <h3 class="text-white-75 mx-auto mt-2 mb-5">Get personalized Spotify Playlists that suit a context (mood or activity), <br> but are closer to your music taste</h3>
+                    <h3 class="text-white-75 mx-auto mt-4 mb-5">Get personalized Spotify Playlists that suit a context (mood or activity), <br> but are closer to your music taste</h3>
                     {% if authorized %}
                         <form class="form-inline d-flex form-check" action="/context" method="post">
-                            <input class="form-control flex-fill mr-5 ml-5 mr-sm-2 mb-3 mb-sm-0" title="non-empty context" required pattern=".*\S+.*" name="keyword" placeholder="Context keywords to search for playlists..." autocomplete="off" />
+                            <input class="form-control flex-fill ml-sm-2 mr-sm-2 mb-3 mb-sm-0" title="non-empty context" required pattern=".*\S+.*" name="keyword" placeholder="Context keywords to search for playlists..." autocomplete="off" />
                             <button class="btn btn-primary mx-auto" type="submit">Go</button>
                         </form>
                     {% else %}
@@ -54,7 +46,9 @@
                     <div class="col-lg-auto mx-auto">
                         <h2 class="text-white mb-4">Code on <a target="_blank" href="https://github.com/gulnazaki/context-zone">Github</a></h2>
                         <p class="text-white-50">
-                            Say you want to work out and you search for some workout playlists, but since you are quite an elitist you do not want to stray far from your music comfort zone. Context Zone is a web app that creates personalized playlists, that aspire to convey the feeling you get from certain music, but at the same time contain songs you will find more familiar to your taste. Providing search keywords you are presented with relevant Spotify playlists (in descending popularity order). You can choose up to 10 playlists, whose songs' audio features are used to get a distribution that will be used to score the tracks familiar to your taste. Afterwards, you can choose between a shallow or deep profiling (how far away from your comfort zone you want to be) and a Spotify playlist is created for you. You can listen to it here or move to Spotify. Spotify access is required to get your top artists and to create your private playlist.
+                            Say you want to work out and you search for some workout playlists, but since you are quite an elitist you do not want to stray far from your music comfort zone. Context Zone is a web app that creates personalized playlists, that aspire to convey the feeling you get from certain music, but at the same time contain songs you will find more familiar to your music taste. <br><br>
+                            By using keywords, you can search for playlists, and include up to 10 that suit your context of choice. The selected playlists are used to extract an audio feature distribution, a representation of the expected context/feeling. Afterwards, you can choose between a shallow or deep profiling (how far from your comfort zone you want to be). Based on the requested context, the profiling type and your top artists preferences, the app gets some recommended tracks, which are further sorted based on their distance from the selected audio feature distribution. The top 100 songs are used to create a selection that is saved as a private Spotify playlist. You can listen to it here or find it on Spotify. <br><br>
+                            Spotify access is required to get your top artists and to create your private playlist.
                         </p>
                     </div>
                 </div>

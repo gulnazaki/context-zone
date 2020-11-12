@@ -2142,7 +2142,6 @@ textarea.form-control {
 .form-check {
   position: relative;
   display: block;
-  padding-left: 1.25rem;
 }
 
 .form-check-input {
@@ -10221,13 +10220,12 @@ body {
 .masthead {
   position: relative;
   width: 100%;
-  height: auto;
-  min-height: 35rem;
-  padding: 15rem 0;
+  min-height: 100vh;
+  padding: 10rem 0 ;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000000 100%), url("/static/images/bg-masthead.jpg");
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: scroll;
+  background-attachment: fixed;
   background-size: cover;
 }
 .masthead h1 {
@@ -10252,8 +10250,7 @@ body {
 }
 @media (min-width: 992px) {
   .masthead {
-    height: 100vh;
-    padding: 0;
+    padding-bottom: 5rem;
   }
   .masthead h1 {
     font-size: 6.5rem;

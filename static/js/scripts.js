@@ -18,9 +18,9 @@
             var [id, name, emb, url] = playlists.pop();
             var div = '<div class="text-center">' + 
                 '<h2 class="text-white-50 mx-auto mt-2 mb-5">Select up to ' + parseInt(Math.min(p_l, 10 - selected_playlist_ids.length)) + ' out of ' + parseInt(p_l) + ' playlists left</h2>' +
-                '<iframe src="' + emb + '" width="400" height="180" style="max-width: 100%;"' +
+                '<iframe src="' + emb + '" width="500" height="180" style="max-width: 100%;"' +
                                 'frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>' +
-                '<h2 class="text-white-50 mx-auto mt-2 mb-2">Do you want to include ' + '<a target="_blank" href="' + url + '">' + name + '</a>?</h2>' +
+                '<h2 class="text-white-50 mx-auto mt-2 mb-2">Do you want to create a playlist that has a feeling similar to ' + '<a target="_blank" href="' + url + '">' + name + '</a>?</h2>' +
                 '<div>' +
                   '<button class="btn btn-green" id="yes" value="' + id +'">Yes</button>' +
                   '<button class="btn btn-red" id="no">No</button>' +
@@ -74,7 +74,7 @@
                 var [url, emb] = JSON.parse(response);
                 var embed = '<div class="text-center">' +
                             '<h2 class="text-white-50 mx-auto mt-2 mb-5">Your <a target="_blank" href="' + url + '">playlist</a> is ready</h2>' +
-                            '<iframe src="' + emb + '" width="400" height="500" style="max-width: 100%;" ' +
+                            '<iframe src="' + emb + '" width="500" height="600" style="max-width: 100%;" ' +
                             'frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>' +
                             '</div>';
                 field.replaceWith(embed);
