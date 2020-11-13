@@ -51,8 +51,6 @@ def statistics():
 def profile_user():
 	sp = get_sp(session)
 	shallow = request.get_json(force=True)['choice']
-	if not (session.get('stats', False)) or not (session.get('context', False)):
-		return "no stats or context"
 
 	stats = session.get('stats')
 	context = session.get('context')
@@ -60,7 +58,7 @@ def profile_user():
 	user_profiling = get_user_profiling(sp, stats, shallow)
 
 	sorted_tracks = score_user_profiling(sp, stats, user_profiling)
-	playlist_urls = save_playlist(sp, context, sorted_tracks)
+	playlist_urls = save_playlist(sp, context, sorted_tracks, shallow)
 
 	return json.dumps(playlist_urls)
 
