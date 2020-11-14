@@ -22,7 +22,8 @@ def get_playlists_for_context(sp, query):
 def get_stats_for_playlists(sp, playlists):
     track_ids = [t['track']['id'] for p in playlists
                  for t in sp.playlist_tracks(p, fields='items(track(id))')['items']
-                                                         if t['track']['id'] is not None]
+                                                         if t is not None and t['track']['id'] is not None]
+
     id_chunks = [track_ids[x:x+100] for x in range(0, len(track_ids), 100)]
 
     features = []
