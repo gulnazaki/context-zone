@@ -70,11 +70,13 @@ def get_user_profiling(sp, stats, shallow):
     
     possible_tracks = list(possible_tracks)
     random.shuffle(possible_tracks)
+    possible_tracks = possible_tracks[:len(possible_tracks)//2]
+
     target_id_chunks = [possible_tracks[x:x+100] for x in range(0, len(possible_tracks), 100)]
 
     targets = []
     for ids in target_id_chunks:
-        if (time.time() - t0) >= second_req_max and len(targets) >= min_tracks:
+        if (time.time() - t0) >= second_req_max and len(targets) >= min_tracks//2:
             break
         targets += zip(ids, sp.audio_features(ids))
 
