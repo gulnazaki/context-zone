@@ -100,7 +100,7 @@ def save_playlist(sp, context, sorted_tracks, shallow, size=100):
     proftype = 'close' if shallow else 'further'
     playlist = sp.user_playlist_create(user_id, 'Context Zone: {} ({})'.format(context.title(), proftype), public=False,
             description="This playlist was created with contextzone.herokuapp.com on {}, especially for you.\
-                         It contains songs from artists similar to those you like, but on the same time it conveys the\
+                         It contains songs from artists similar to those you like, but at the same time it conveys the\
                          feeling/mood found in the playlists you chose, based on the \"{}\" context.\
                          These are the {} songs whose audio features are closer to the distribution you chose.".format(dt, context, size))
     playlist_id = playlist['id']
